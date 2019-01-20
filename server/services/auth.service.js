@@ -45,6 +45,7 @@ async function signup(userParam) {
   user.password = bcrypt.hashSync(user.password, 10); 
   // save user
   await user.save();
+  // send token
   const payload = {
     sub: user.id,
     fullName: user.fullName,
@@ -55,7 +56,7 @@ async function signup(userParam) {
   return data;
 }
 
-function signout(){
+async function signout(){
   console.log('Signout');
-  
+  return {}; 
 }

@@ -19,6 +19,8 @@ function signup(req, res, next){
 }
 
 function signout(req, res, next){
-  console.log('signout');
-  
+  //res.json({});
+  authService.signout()
+    .then(() => res.json({}))
+    .catch(err => next(err));
 }

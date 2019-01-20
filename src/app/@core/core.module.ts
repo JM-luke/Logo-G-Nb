@@ -62,6 +62,10 @@ export const NB_CORE_PROVIDERS = [
           endpoint: '/signup',
           method: 'post',
         },
+        logout: {
+          endpoint: '/signout',
+          method: 'delete',
+        },
       })
     ],
     forms: {
@@ -84,7 +88,11 @@ export const NB_CORE_PROVIDERS = [
         },
         terms: true,
         socialLinks: socialLinks,
-      }
+      },
+      logout: {
+        redirectDelay: 500,
+        strategy: 'pass',
+      },
     }
   }).providers,
 

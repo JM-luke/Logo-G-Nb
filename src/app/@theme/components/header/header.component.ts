@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { NbMenuService, NbSidebarService } from '@nebular/theme';
-import { UserService } from '../../../@core/data/users.service';
+//import { UserService } from '../../../@core/data/users.service';
 import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 import { AnalyticsService } from '../../../@core/utils';
 import { LayoutService } from '../../../@core/utils';
@@ -19,11 +19,11 @@ export class HeaderComponent implements OnInit {
 
   user: {};
 
-  userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
+  userMenu = [{ title: 'Profile', link: ['/users/me'] }, { title: 'Log out', link: ['/auth/logout'] }];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
-              private userService: UserService,
+              //private userService: UserService,
               private analyticsService: AnalyticsService,
               private layoutService: LayoutService,
               private authService: NbAuthService) {
