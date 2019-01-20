@@ -59,7 +59,7 @@ export const NB_CORE_PROVIDERS = [
           method: 'post',
         },
         register: {
-          endpoint: '/register',
+          endpoint: '/signup',
           method: 'post',
         },
       })

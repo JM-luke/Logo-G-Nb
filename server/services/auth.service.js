@@ -4,7 +4,9 @@ const jwt = require ('jsonwebtoken');
 const config = require('../config.json');
 
 module.exports = {
-  signin
+  signin,
+  signup,
+  signout
 }
 
 async function signin({ email, password }) {
@@ -14,7 +16,7 @@ async function signin({ email, password }) {
     const { password, ...userWithoutPassword } = user.toObject();
     const payload = {
       sub: user.id,
-      name: user.name,
+      fullName: user.fullName,
       // surmname: user.surmname,
       // email: user.email,
       permissions: [user.role]
@@ -25,4 +27,35 @@ async function signin({ email, password }) {
       token
     };
   }
+}
+
+async function signup(userParam) {
+
+  console.log(userParam);
+  const user = new User(userParam);
+  if(!user.password  || userParam.password !== userParam.confirmPassword){ throw 'Invalid password' }
+  // validate
+  if(!user.fullName || !user.email){
+    throw 'incomplete data'; 
+  }
+  if (await User.findOne({ email: user.email })) {
+    throw 'Email "' + userParam.email + '" is already taken';
+  }
+  // hash password
+  user.password = bcrypt.hashSync(user.password, 10); 
+  // save user
+  await user.save();
+  const payload = {
+    sub: user.id,
+    fullName: user.fullName,
+    permissions: [user.role]
+  }
+  const token = jwt.sign(payload, config.secret, { expiresIn: '24h' });
+  const data = { token: token };
+  return data;
+}
+
+function signout(){
+  console.log('Signout');
+  
 }
