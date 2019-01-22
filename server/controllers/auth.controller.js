@@ -3,7 +3,9 @@ const authService = require('../services/auth.service');
 module.exports = {
   signin : signin,
   signup : signup,
-  signout : signout
+  signout : signout,
+  forgot : forgot,
+  //reset : reset
 };
 
 function signin(req, res, next) {
@@ -21,6 +23,12 @@ function signup(req, res, next){
 function signout(req, res, next){
   //res.json({});
   authService.signout()
+    .then(() => res.json({}))
+    .catch(err => next(err));
+}
+
+function forgot(req, res, next){
+  authService.forgot()
     .then(() => res.json({}))
     .catch(err => next(err));
 }

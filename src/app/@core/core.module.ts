@@ -66,6 +66,14 @@ export const NB_CORE_PROVIDERS = [
           endpoint: '/signout',
           method: 'delete',
         },
+        requestPass: {
+          endpoint: '/forgot',
+          method: 'post',
+        },
+        resetPass: {
+          endpoint: '/reset',
+          method: 'post',
+        }
       })
     ],
     forms: {
@@ -92,6 +100,14 @@ export const NB_CORE_PROVIDERS = [
       logout: {
         redirectDelay: 500,
         strategy: 'pass',
+      },
+      requestPassword: {
+        strategy: 'pass',
+        socialLinks: socialLinks,
+      },
+      resetPassword: {
+          strategy: 'pass',
+          socialLinks: socialLinks,
       },
     }
   }).providers,
