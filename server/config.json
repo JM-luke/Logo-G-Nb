@@ -9,11 +9,18 @@
   "emailGroups":{},
   "mailer":{
     "options":{
-      "host": "smtp.ono.com",
-      "port": 25,
-      "secure": false,
-      "from": "LogoG@admin.com"
-    }
-  }
+
+     
+        "host": "smtp.gmail.com",
+        "port": 465, 
+        "auth": {
+            "user": "jwluque@gmail.com",
+            "pass": "humana16"
+        }
     
-}
+    
+
+      }
+    }
+    
+  }
