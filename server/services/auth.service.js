@@ -83,15 +83,10 @@ async function forgot(userParams){
     html: emailHTML
   };
   const smtpTransport = nodemailer.createTransport(config.mailer.options);
-  try {
-    smtpTransport.sendMail(mailOptions, function (err) {
-      if (err) { throw 'Failure sending email' }
-      return { message: 'An email has been sent to the provided email with further instructions.' }
-    });
-  } catch (error) {
-    throw error;
-  }
-
+  smtpTransport.sendMail(mailOptions, function (err) {
+    if (err) { throw 'Failure sending email' }
+    return { message: 'An email has been sent to the provided email with further instructions.' }
+  });
 
 }
 
