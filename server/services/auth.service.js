@@ -2,6 +2,7 @@ const User = require('../models/user.model');
 const bcrypt = require('bcryptjs');
 const jwt = require ('jsonwebtoken');
 const config = require('../config.json');
+const nodemailer = require('nodemailer');
 
 module.exports = {
   signin,
@@ -62,11 +63,56 @@ async function signout(){
   console.log('Signout');
   return {}; 
 }
-
-async function forgot(){
-  console.log('forgot');
-  return {}; 
+async function forgot(userParams){
+  //
+  const email = userParams.email;
+  const user = await User.findOne({ email });
+  if(!user){ throw 'Email "' + email + '" invalid' }
+  const payload = {
+    sub: user.id,
+    email: user.email,
+  }
+  const secret = user.password+'-'+user.createdDate.getTime();
+  const token = jwt.sign(payload, secret, { expiresIn: '1h' });
+  user.resetPasswordToken = token;
+  user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+  await user.save();
+  var mailOptions = {
+    to: user.email,
+    from: config.mailer.from,
+    subject: 'Password Reset',
+    html: emailHTML
+  };
+  const smtpTransport = nodemailer.createTransport(config.mailer.options);
+  return smtpTransport.sendMail(mailOptions, function (err) {
+    if (err) { throw 'Failure sending email' }
+    return { message: 'An email has been sent to the provided email with further instructions.' }
+  });
 }
+
+const emailHTML = 
+` <!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <title></title>
+</head>
+
+<body>
+  <p>Dear {{name}},</p>
+  <br />
+  <p>
+    You have requested to have your password reset for your account at {{appName}}
+  </p>
+  <p>Please visit this url to reset your password:</p>
+  <p>{{url}}</p>
+  <strong>If you didn't make this request, you can ignore this email.</strong>
+  <br />
+  <br />
+  <p>The {{appName}} Support Team</p>
+</body>
+
+</html>`;
 
 /*
 var smtpTransport = nodemailer.createTransport(config.mailer.options);

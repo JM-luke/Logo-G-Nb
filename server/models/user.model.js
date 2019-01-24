@@ -41,7 +41,7 @@ const UserSchema = new Schema ({
     roles: {
       type: [{
         type: String,
-        enum: ['user', 'admin']
+        enum: ['User', 'Admin', 'Controller']
       }],
       required: 'Please provide at least one role',
       default: [Role.User]

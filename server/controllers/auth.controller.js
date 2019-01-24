@@ -28,7 +28,7 @@ function signout(req, res, next){
 }
 
 function forgot(req, res, next){
-  authService.forgot()
+  authService.forgot(req.body)
     .then(() => res.json({}))
     .catch(err => next(err));
 }
