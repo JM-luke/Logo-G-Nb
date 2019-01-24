@@ -9,7 +9,7 @@
   "emailGroups":{},
   "mailer":{
     "options":{
-      "host": "smtp.adif.es",
+      "host": "smtp.ono.com",
       "port": 25,
       "secure": false,
       "from": "LogoG@admin.com"

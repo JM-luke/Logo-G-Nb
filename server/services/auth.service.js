@@ -64,10 +64,9 @@ async function signout(){
   return {}; 
 }
 async function forgot(userParams){
-  //
-  const email = userParams.email;
+  const email = userParams.email || '';
   const user = await User.findOne({ email });
-  if(!user){ throw 'Email "' + email + '" invalid' }
+  if(!user){ throw `Email ${email} invalid` }
   const payload = {
     sub: user.id,
     email: user.email,
@@ -84,10 +83,16 @@ async function forgot(userParams){
     html: emailHTML
   };
   const smtpTransport = nodemailer.createTransport(config.mailer.options);
-  return smtpTransport.sendMail(mailOptions, function (err) {
-    if (err) { throw 'Failure sending email' }
-    return { message: 'An email has been sent to the provided email with further instructions.' }
-  });
+  try {
+    smtpTransport.sendMail(mailOptions, function (err) {
+      if (err) { throw 'Failure sending email' }
+      return { message: 'An email has been sent to the provided email with further instructions.' }
+    });
+  } catch (error) {
+    throw error;
+  }
+
+
 }
 
 const emailHTML = 
