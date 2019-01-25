@@ -11,8 +11,8 @@ export class AuthGuard implements CanActivate {
 
   canActivate() {
     // canActive can return Observable<boolean>, which is exactly what isAuhenticated returns
-    return this.authService.isAuthenticated() 
-    .pipe(
+    return this.authService.isAuthenticated()
+      .pipe(
         tap(authenticated => {
           if (!authenticated) {
             this.router.navigate(['auth/login']);

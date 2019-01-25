@@ -60,12 +60,15 @@ async function signup(userParam) {
 }
 
 async function signout(){
-  console.log('Signout');
   return {}; 
 }
+
 async function forgot(userParams){
-  const email = userParams.email || '';
+  const email = userParams.body.email || '';
   const user = await User.findOne({ email });
+  console.log(`email ${email}` );
+  console.log(`userParams ${userParams.headers}`);
+  
   if(!user){ throw `Email ${email} invalid` }
   const payload = {
     sub: user.id,
@@ -76,6 +79,28 @@ async function forgot(userParams){
   user.resetPasswordToken = token;
   user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
   await user.save();
+  const baseUrl = config.domain || 'http://' + userParams.headers.host;
+  const emailHTML = 
+    ` <!DOCTYPE html>
+    <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+      <head>
+        <title></title>
+      </head>
+      <body>
+        <p>Dear ${user.fullName},</p>
+        <br />
+        <p>
+        You have requested to have your password reset for your account at ${config.app.name}
+        </p>
+        <p>Please visit this url to reset your password:</p>
+        <p>${baseUrl + '/api/auth/reset/' + token}</p>
+        <p>the link expires in one hour.</p>
+        <strong>If you didn't make this request, you can ignore this email.</strong>
+        <br />
+        <br />
+        <p>The ${config.app.name} Support Team</p>
+      </body>
+    </html>`;
   var mailOptions = {
     to: user.email,
     from: config.mailer.from,
@@ -92,31 +117,7 @@ async function forgot(userParams){
     }
   })
 }
-
-const emailHTML = 
-` <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-
-<head>
-  <title></title>
-</head>
-
-<body>
-  <p>Dear {{name}},</p>
-  <br />
-  <p>
-    You have requested to have your password reset for your account at {{appName}}
-  </p>
-  <p>Please visit this url to reset your password:</p>
-  <p>{{url}}</p>
-  <strong>If you didn't make this request, you can ignore this email.</strong>
-  <br />
-  <br />
-  <p>The {{appName}} Support Team</p>
-</body>
-
-</html>`;
-
+  
 /*
 var smtpTransport = nodemailer.createTransport(config.mailer.options);
 */

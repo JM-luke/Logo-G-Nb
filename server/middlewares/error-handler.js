@@ -1,7 +1,9 @@
 module.exports = errorHandler;
 
 function errorHandler(err, req, res, next) {
-
+    
+    console.error(`Error message: ${err.message}`);
+    
     if (typeof (err) === 'string') {
         // custom application error
         return res.status(400).json({ message: err+':-(' });

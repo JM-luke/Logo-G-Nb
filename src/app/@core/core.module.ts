@@ -43,10 +43,10 @@ export const NB_CORE_PROVIDERS = [
   ...NbAuthModule.forRoot({
 
     strategies: [
-      NbDummyAuthStrategy.setup({
-        name: 'email',
-        delay: 3000,
-      }),
+      // NbDummyAuthStrategy.setup({
+      //   name: 'email',
+      //   delay: 3000,
+      // }),
       NbPasswordAuthStrategy.setup({
         name: 'pass',
         token: {
@@ -103,12 +103,12 @@ export const NB_CORE_PROVIDERS = [
         strategy: 'pass',
       },
       requestPassword: {
-        strategy: 'pass',
-        socialLinks: socialLinks,
+        redirectDelay: 3000,
+        strategy: 'pass'
       },
       resetPassword: {
-          strategy: 'pass',
-          socialLinks: socialLinks,
+        strategy: 'pass',
+        socialLinks: socialLinks,
       },
     },
   }).providers,
