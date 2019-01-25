@@ -82,10 +82,15 @@ async function forgot(userParams){
     subject: 'Password Reset',
     html: emailHTML
   };
-  const smtpTransport = nodemailer.createTransport(config.mailer.options);
-  smtpTransport.sendMail(mailOptions)
-    .then( () => { return { message: 'An email has been sent to the provided email with further instructions.' }})
-    .catch((err) => { throw 'Failure sending email' });
+  const transporter = nodemailer.createTransport(config.mailer.options);
+  transporter.sendMail(mailOptions, function(error, info){
+    if(error){
+      console.log(error);
+      return { message: 'An email has been sent to the provided email with further instructions.' }
+    }else{
+      console.log(`Email sent: ${info.response}`);
+    }
+  })
 }
 
 const emailHTML = 

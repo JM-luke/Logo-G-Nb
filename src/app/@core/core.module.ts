@@ -43,15 +43,15 @@ export const NB_CORE_PROVIDERS = [
   ...NbAuthModule.forRoot({
 
     strategies: [
-      // NbDummyAuthStrategy.setup({
-      //   name: 'email',
-      //   delay: 3000,
-      // }),
+      NbDummyAuthStrategy.setup({
+        name: 'email',
+        delay: 3000,
+      }),
       NbPasswordAuthStrategy.setup({
         name: 'pass',
         token: {
           class: NbAuthJWTToken,
-          key: 'token'
+          key: 'token',
         },
         baseEndpoint: 'http://localhost:3000/api/auth',
         login: {
@@ -73,12 +73,13 @@ export const NB_CORE_PROVIDERS = [
         resetPass: {
           endpoint: '/reset',
           method: 'post',
-        }
-      })
+        },
+      }),
     ],
     forms: {
       login: {
-        redirectDelay: 500, // delay before redirect after a successful login, while success message is shown to the user
+        redirectDelay: 500, // delay before redirect after a successful login,
+                            // while success message is shown to the user
         strategy: 'pass',  // strategy id key.
         rememberMe: true,   // whether to show or not the `rememberMe` checkbox
         showMessages: {     // show/not show success/error messages
@@ -109,7 +110,7 @@ export const NB_CORE_PROVIDERS = [
           strategy: 'pass',
           socialLinks: socialLinks,
       },
-    }
+    },
   }).providers,
 
   NbSecurityModule.forRoot({

@@ -10,7 +10,8 @@ export class AuthGuard implements CanActivate {
   }
 
   canActivate() {
-    return this.authService.isAuthenticated() // canActive can return Observable<boolean>, which is exactly what isAuhenticated returns
+    // canActive can return Observable<boolean>, which is exactly what isAuhenticated returns
+    return this.authService.isAuthenticated() 
     .pipe(
         tap(authenticated => {
           if (!authenticated) {
