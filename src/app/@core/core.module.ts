@@ -103,7 +103,7 @@ export const NB_CORE_PROVIDERS = [
         strategy: 'pass',
       },
       requestPassword: {
-        redirectDelay: 3000,
+        redirectDelay: 10000,
         strategy: 'pass'
       },
       resetPassword: {

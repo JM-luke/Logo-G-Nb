@@ -66,8 +66,6 @@ async function signout(){
 async function forgot(userParams){
   const email = userParams.body.email || '';
   const user = await User.findOne({ email });
-  console.log(`email ${email}` );
-  console.log(`userParams ${userParams.headers}`);
   
   if(!user){ throw `Email ${email} invalid` }
   const payload = {
@@ -108,14 +106,13 @@ async function forgot(userParams){
     html: emailHTML
   };
   const transporter = nodemailer.createTransport(config.mailer.options);
-  transporter.sendMail(mailOptions, function(error, info){
-    if(error){
-      console.log(error);
-      return { message: 'An email has been sent to the provided email with further instructions.' }
-    }else{
-      console.log(`Email sent: ${info.response}`);
-    }
-  })
+  await transporter.sendMail(mailOptions)
+    .then((info) => console.log(`Email sent: ${info.response}`))
+    .catch((err) => {
+      console.log(err);
+      throw err;
+    });
+
 }
   
 /*
