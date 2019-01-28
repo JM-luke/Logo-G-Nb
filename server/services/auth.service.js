@@ -9,7 +9,8 @@ module.exports = {
   signup,
   signout,
   forgot,
-  //reset
+  reset,
+  validateResetToken,
 }
 
 async function signin({ email, password }) {
@@ -91,7 +92,7 @@ async function forgot(userParams){
         You have requested to have your password reset for your account at ${config.app.name}
         </p>
         <p>Please visit this url to reset your password:</p>
-        <p>${baseUrl + '/api/auth/reset/' + token}</p>
+        <p>${baseUrl + 'api/auth/reset/' + token}</p>
         <p>the link expires in one hour.</p>
         <strong>If you didn't make this request, you can ignore this email.</strong>
         <br />
@@ -115,6 +116,25 @@ async function forgot(userParams){
 
 }
   
+
+async function validateResetToken(req, res){
+  const user = await User.findOne({ 
+    resetPasswordToken: req.params.token,
+    resetPasswordExpires: {
+      $gt: Date.now()
+    }
+  });
+  console.log(user);
+
+
+}
+
+async function reset(){
+  console.log('reset');
+  return{}
+}
+
+
 /*
 var smtpTransport = nodemailer.createTransport(config.mailer.options);
 */
