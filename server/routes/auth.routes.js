@@ -9,6 +9,6 @@ router.delete('/signout', authCtrl.signout);
 router.post('/forgot', authCtrl.forgot);
 
 router.get('/reset/:token', authCtrl.validateResetToken);
-router.post('/reset/:token', authCtrl.reset);
+router.post('/reset', authCtrl.reset);
 
 module.exports = router;

@@ -35,12 +35,12 @@ function forgot(req, res, next){
 
 function validateResetToken(req, res, next){
   authService.validateResetToken(req, res)
-    .then(() => res.json({}))
+    .then(/*() => res.json({})*/)
     .catch(err => next(err));
 }
 
-function reset(){
-  authService.reset()
+function reset(req, res, next){
+  authService.reset(req, res)
     .then(() => res.json({}))
     .catch(err => next(err));
 }
