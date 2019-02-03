@@ -24,7 +24,7 @@ app.use(jwt());
 app.use('/api/users',require('./routes/user.routes'));
 app.use('/api/dataLogo',require('./routes/dataLogo.routes'));
 app.use('/api/auth',require('./routes/auth.routes'));
-app.use('api/controls', require('./routes/controls.routes'));
+app.use('/api/controls', require('./routes/controls.routes'));
 app.use(errorHandler);
 
 //starting the server

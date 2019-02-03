@@ -9,7 +9,8 @@ module.exports = {
   signup,
   signout,
   forgot,
-  //reset
+  reset,
+  validateResetToken,
 }
 
 async function signin({ email, password }) {
@@ -91,9 +92,11 @@ async function forgot(userParams){
         You have requested to have your password reset for your account at ${config.app.name}
         </p>
         <p>Please visit this url to reset your password:</p>
-        <p>${baseUrl + '/api/auth/reset/' + token}</p>
+        <p>${baseUrl + '/#/auth/reset-password/?reset_password_token=' + token}</p>
+        <br />
+        <p>${'http://localhost:4200/#/auth/reset-password/?reset_password_token='+ token}</p>
         <p>the link expires in one hour.</p>
-        <strong>If you didn't make this request, you can ignore this email.</strong>
+        <strong>If you didn't make this request, you can ignore this email.</strong> <!--###-->
         <br />
         <br />
         <p>The ${config.app.name} Support Team</p>
@@ -115,6 +118,44 @@ async function forgot(userParams){
 
 }
   
+
+async function validateResetToken(req, res){
+//   const user = await User.findOne({ 
+//     resetPasswordToken: req.params.token,
+//     resetPasswordExpires: {
+//       $gt: Date.now()
+//     }
+//   });
+//   if(!user){ 
+//     //throw `Password reset is invalid`
+//     return res.redirect('/password/reset/invalid');
+//   }
+//   res.redirect('/reset-password/'+ req.params.token);
+}
+
+async function reset(req, res){
+  
+  const user = await User.findOne({ 
+    resetPasswordToken: req.body.reset_password_token,
+    resetPasswordExpires: {
+      $gt: Date.now()
+    }
+  });
+
+  if(!user){ 
+    throw `Token reset is invalid`;
+  }
+  if(req.body.password && req.body.password === req.body.confirmPassword){
+    // hash password
+    user.password = bcrypt.hashSync(req.body.password, 10);
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+  }
+}
+
+
+
 /*
 var smtpTransport = nodemailer.createTransport(config.mailer.options);
 */
