@@ -103,7 +103,7 @@ export const NB_CORE_PROVIDERS = [
         strategy: 'pass',
       },
       requestPassword: {
-        redirectDelay: 10000,
+        redirectDelay: 500,
         strategy: 'pass'
       },
       resetPassword: {
@@ -116,14 +116,23 @@ export const NB_CORE_PROVIDERS = [
   NbSecurityModule.forRoot({
     accessControl: {
       guest: {
-        view: '*',
+        
       },
       user: {
         parent: 'guest',
+        view: '*',
+      },
+      controller: {
+        parent: 'user',
+        view: '*',
+        edit: '*',
+      },
+      admin: {
+        parent: 'user',
         create: '*',
         edit: '*',
         remove: '*',
-      },
+      }
     },
   }).providers,
 

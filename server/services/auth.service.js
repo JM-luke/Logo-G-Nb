@@ -109,7 +109,7 @@ async function forgot(userParams){
   await transporter.sendMail(mailOptions)
     .then((info) => console.log(`Email sent: ${info.response}`))
     .catch((err) => {
-      console.log(err);
+      //console.log(err);
       throw err;
     });
 
