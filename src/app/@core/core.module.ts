@@ -124,13 +124,10 @@ export const NB_CORE_PROVIDERS = [
       },
       controller: {
         parent: 'user',
-        view: '*',
         edit: '*',
       },
       admin: {
-        parent: 'user',
-        create: '*',
-        edit: '*',
+        parent: 'controller',
         remove: '*',
       }
     },
