@@ -23,7 +23,7 @@ async function signin({ email, password }) {
       fullName: user.fullName,
       // surmname: user.surmname,
       // email: user.email,
-      permissions: [user.role]
+      roles: user.roles
     }
     const token = jwt.sign(payload, config.secret, { expiresIn: '24h' });
     return {

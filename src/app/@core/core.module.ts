@@ -1,8 +1,9 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NbAuthModule, NbDummyAuthStrategy, NbPasswordAuthStrategy, NbAuthJWTToken } from '@nebular/auth';
+import { RoleProvider } from './role.provider';
 import { NbSecurityModule, NbRoleProvider } from '@nebular/security';
-import { of as observableOf } from 'rxjs';
+//import { of as observableOf } from 'rxjs';
 
 import { throwIfAlreadyLoaded } from './module-import-guard';
 import { DataModule } from './data/data.module';
@@ -31,12 +32,12 @@ const socialLinks = [
   },
 ];
 
-export class NbSimpleRoleProvider extends NbRoleProvider {
-  getRole() {
-    // here you could provide any role based on any auth flow
-    return observableOf('guest');
-  }
-}
+// export class NbSimpleRoleProvider extends NbRoleProvider {
+//   getRole() {
+//     // here you could provide any role based on any auth flow
+//     return observableOf('guest');
+//   }
+// }
 
 export const NB_CORE_PROVIDERS = [
   ...DataModule.forRoot().providers,
@@ -116,11 +117,11 @@ export const NB_CORE_PROVIDERS = [
   NbSecurityModule.forRoot({
     accessControl: {
       guest: {
-        
+        //view: '',
       },
       user: {
-        parent: 'guest',
-        view: '*',
+        //parent: 'guest',
+        view: ['panel'],
       },
       controller: {
         parent: 'user',
@@ -134,7 +135,7 @@ export const NB_CORE_PROVIDERS = [
   }).providers,
 
   {
-    provide: NbRoleProvider, useClass: NbSimpleRoleProvider,
+    provide: NbRoleProvider, useClass: RoleProvider,
   },
   AnalyticsService,
   LayoutService,

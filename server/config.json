@@ -6,9 +6,13 @@
   "connectionString": "mongodb://localhost/logoG",
   "secret": "clave_secreta_del_proyecto_de_Logo_Generico",
   "roles": {
-    "Admin": "Admin",
-    "User": "User",
-    "Controller": "Controller"
+    "guest" : "guest",
+    "user": "user",
+    "controller": "controller",
+    "admin": "admin"
+  },
+  "illegalUsernames": {
+
   },
   "emailGroups":{},
   "mailer":{

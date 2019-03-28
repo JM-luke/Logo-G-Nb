@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Role = require('./role');
+const config = require('../config.json');
 const { Schema } = mongoose;
 
 /**
@@ -41,10 +41,10 @@ const UserSchema = new Schema ({
     roles: {
       type: [{
         type: String,
-        enum: ['User', 'Admin', 'Controller']
+        enum: Object.values(config.roles),
       }],
       required: 'Please provide at least one role',
-      default: [Role.User]
+      default: ['user']
     },
     profileImageURL: {
       type: String,
