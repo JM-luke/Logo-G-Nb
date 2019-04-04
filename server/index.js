@@ -18,6 +18,8 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors({origin: '*'}));
 
+//static
+app.use(express.static(__dirname + '/dist'));
 // use JWT auth to secure the api
 app.use(jwt());
 //routes
