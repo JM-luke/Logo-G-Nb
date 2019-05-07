@@ -39,6 +39,11 @@ export class DashboardComponent implements OnDestroy {
     iconClass: 'nb-coffee-maker',
     type: 'warning',
   };
+  alarmCard: CardSettings = {
+    title: 'Alarm Home',
+    iconClass: 'nb-alert',
+    type: 'warning',
+  };
 
   statusCards: string;
 
@@ -47,6 +52,7 @@ export class DashboardComponent implements OnDestroy {
     this.rollerShadesCard,
     this.wirelessAudioCard,
     this.coffeeMakerCard,
+    this.alarmCard,
   ];
 
   statusCardsByThemes: {
@@ -72,6 +78,10 @@ export class DashboardComponent implements OnDestroy {
       {
         ...this.coffeeMakerCard,
         type: 'secondary',
+      },
+      {
+        ...this.alarmCard,
+        type: 'danger',
       },
     ],
   };
