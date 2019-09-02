@@ -18,9 +18,9 @@
   "mailer":{
     "from": "Logo-G App",
     "options":{
-        "host": "smtp.adif.es",
-        "port": 25
-      }
+      "host": "smtp.adif.es",
+      "port": 25
     }
-    
   }
+    
+}

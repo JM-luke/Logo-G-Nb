@@ -4,13 +4,13 @@ const controlsCtrl = {};
 
   controlsCtrl.getControls = (req, res, next) => {
     controlService.getAll()
-      .then(users => res.json(users))
+      .then(controls => res.json(controls))
       .catch(err => next(err));
   };
   
   controlsCtrl.getControl = (req, res, next) => {
     controlService.getById(req.params.id)
-      .then(user => user ? res.json(user) : res.sendStatus(404))
+      .then(control => control ? res.json(control) : res.sendStatus(404))
       .catch(err => next(err));
   };
   

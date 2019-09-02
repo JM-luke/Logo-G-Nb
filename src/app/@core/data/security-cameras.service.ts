@@ -26,6 +26,10 @@ export class SecurityCamerasService {
       title: 'Camera #4',
       source: 'assets/images/camera4.jpg',
     },
+    {
+      title: 'Camera #5',
+      source: 'assets/images/camera4.jpg',
+    },
   ];
 
   getCamerasData(): Observable<Camera[]> {

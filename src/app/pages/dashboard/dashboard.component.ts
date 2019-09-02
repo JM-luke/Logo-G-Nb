@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { NbThemeService } from '@nebular/theme';
 import { takeWhile } from 'rxjs/operators' ;
 import { SolarService } from '../../@core/data/solar.service';
@@ -44,6 +44,11 @@ export class DashboardComponent implements OnDestroy {
     iconClass: 'nb-alert',
     type: 'warning',
   };
+  myAlarmCard: CardSettings = {
+    title: 'Alarma',
+    iconClass: 'nb-alert',
+    type: 'danger',
+  };
 
   statusCards: string;
 
@@ -53,6 +58,9 @@ export class DashboardComponent implements OnDestroy {
     this.wirelessAudioCard,
     this.coffeeMakerCard,
     this.alarmCard,
+    this.myAlarmCard,
+    this.myAlarmCard,
+    this.myAlarmCard,
   ];
 
   statusCardsByThemes: {
