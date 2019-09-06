@@ -15,7 +15,7 @@ module.exports = {
 };
 
 async function getAll() {
-
+  console.log('Controls getAll');
 }
 
 async function getById(id) {

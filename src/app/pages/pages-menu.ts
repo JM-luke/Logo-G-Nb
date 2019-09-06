@@ -234,6 +234,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
+    title: 'Admin',
+    icon: 'nb-tables',
+    children: [
+      {
+        title: 'Users',
+        link: '/admin/users',
+      },
+    ],
+  },
+  {
     title: 'Auth',
     icon: 'nb-locked',
     children: [
