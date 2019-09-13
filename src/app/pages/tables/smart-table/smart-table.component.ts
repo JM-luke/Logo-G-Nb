@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
 import { SmartTableService } from '../../../@core/data/smart-table.service';
+import { UsersTableService } from '../../../admin/services/users-table-service';
 
 @Component({
   selector: 'ngx-smart-table',
@@ -59,7 +60,7 @@ export class SmartTableComponent {
 
   source: LocalDataSource = new LocalDataSource();
 
-  constructor(private service: SmartTableService) {
+  constructor(private service: UsersTableService) {
     const data = this.service.getData();
     this.source.load(data);
   }
