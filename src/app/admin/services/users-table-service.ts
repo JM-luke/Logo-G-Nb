@@ -26,9 +26,9 @@ export class UsersTableService {
     username: '@twitter',
     email: 'twitter@outlook.com',
     age: '18',
-}];
+  }];
 
-getData() {
-  return this.data;
-}
+  getData() {
+    return this.data;
+  }
 }

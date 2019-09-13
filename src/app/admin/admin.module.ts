@@ -6,7 +6,7 @@ import { AdminComponent } from './admin.component';
 import { ThemeModule } from '../@theme/theme.module';
 import { MiscellaneousModule } from '../pages/miscellaneous/miscellaneous.module';
 
-import { TablesModule } from '../pages/tables/tables.module';
+import { TablesModule } from '../common/tables/tables.module';
 
 const ADMIN_COMPONENTS = [
   AdminComponent,
