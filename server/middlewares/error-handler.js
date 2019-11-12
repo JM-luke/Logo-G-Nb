@@ -11,12 +11,16 @@ function errorHandler(err, req, res, next) {
 
     if (err.name === 'ValidationError') {
         // mongoose validation error
-        return res.status(400).json({ data: { errors: err.message }});
+        return res.status(400).json({ data: { errors: err.message+' :-((' }});
     }
 
     if (err.name === 'UnauthorizedError') {
         // jwt authentication error
         return res.status(401).json({ data: { errors: 'Invalid Token' }});
+    }
+    if (err.name === 'not found'){
+        // 404 not found
+        return res.status(404).json({ data: { errors: 'Not Found'}});
     }
 
     // default to 500 server error

@@ -14,7 +14,7 @@ export class RoleProvider implements NbRoleProvider {
     return this.authService.onTokenChange()
       .pipe(
         map((token: NbAuthJWTToken) => {
-          return token.isValid() ? token.getPayload()['roles'] : 'guest';
+          return token.isValid() ? token.getPayload()['permissions'] : 'guest';
         }),
       );
   }

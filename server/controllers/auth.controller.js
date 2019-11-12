@@ -7,6 +7,7 @@ module.exports = {
   forgot : forgot,
   validateResetToken : validateResetToken,
   reset : reset,
+  resetPass : resetPass,
 };
 
 function signin(req, res, next) {
@@ -35,12 +36,20 @@ function forgot(req, res, next){
 
 function validateResetToken(req, res, next){
   authService.validateResetToken(req, res)
-    .then(/*() => res.json({})*/)
+    .then(
+      //() => res.json({})
+    )
     .catch(err => next(err));
 }
 
 function reset(req, res, next){
   authService.reset(req, res)
+    .then(() => res.json({}))
+    .catch(err => next(err));
+}
+
+function resetPass(req, res, next){
+  authService.resetPass(req, res)
     .then(() => res.json({}))
     .catch(err => next(err));
 }

@@ -10,6 +10,7 @@ module.exports = {
   signout,
   forgot,
   reset,
+  resetPass,
   validateResetToken,
 }
 
@@ -23,7 +24,8 @@ async function signin({ email, password }) {
       fullName: user.fullName,
       // surmname: user.surmname,
       // email: user.email,
-      roles: user.roles
+      // roles: user.roles,
+      permissions: user.roles
     }
     const token = jwt.sign(payload, config.secret, { expiresIn: '24h' });
     return {
@@ -92,9 +94,7 @@ async function forgot(userParams){
         You have requested to have your password reset for your account at ${config.app.name}
         </p>
         <p>Please visit this url to reset your password:</p>
-        <p>${baseUrl + '/#/auth/reset-password/?reset_password_token=' + token}</p>
-        <br />
-        <p>${'http://localhost:4200/#/auth/reset-password/?reset_password_token='+ token}</p>
+        <p>${baseUrl + 'api/auth/reset-password?reset_password_token='+ token}</p>
         <p>the link expires in one hour.</p>
         <strong>If you didn't make this request, you can ignore this email.</strong> <!--###-->
         <br />
@@ -120,30 +120,55 @@ async function forgot(userParams){
   
 
 async function validateResetToken(req, res){
-//   const user = await User.findOne({ 
-//     resetPasswordToken: req.params.token,
-//     resetPasswordExpires: {
-//       $gt: Date.now()
-//     }
-//   });
-//   if(!user){ 
-//     //throw `Password reset is invalid`
-//     return res.redirect('/password/reset/invalid');
-//   }
-//   res.redirect('/reset-password/'+ req.params.token);
+  const user = await User.findOne({ 
+    resetPasswordToken: req.query.reset_password_token,
+    resetPasswordExpires: {
+      $gt: Date.now()
+    }
+  });
+  if(!user){ 
+    // 404
+    //res.redirect('/#/pages/miscellaneous/404');
+    throw {name: 'ValidationError', message: `Password reset is invalid`};
+  }
+  res.redirect('/#/auth/reset-password?reset_password_token=' + req.query.reset_password_token);
+}
+/*
+* reset from app
+*/
+async function reset(req, res){
+  user = await User.findById(req.user.sub); 
+  if(!user){ 
+    throw `Token reset is invalid or has expired.`;
+  }
+
+  if(req.body.currentPassword && bcrypt.compareSync(req.body.currentPassword, user.password)) {
+    if(req.body.password && req.body.password === req.body.confirmPassword){
+      // hash password
+      user.password = bcrypt.hashSync(req.body.password, 10);
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpires = undefined;
+      await user.save();
+    }else{
+      throw `Passwords do not match`;
+    }
+  }else{
+    throw `Invalid password`;
+  }
 }
 
-async function reset(req, res){
-  
-  const user = await User.findOne({ 
+/*
+* reset from email
+*/
+async function resetPass(req, res){
+  user = await User.findOne({ 
     resetPasswordToken: req.body.reset_password_token,
     resetPasswordExpires: {
       $gt: Date.now()
     }
   });
-
   if(!user){ 
-    throw `Token reset is invalid`;
+    throw `Token reset is invalid or has expired.`;
   }
   if(req.body.password && req.body.password === req.body.confirmPassword){
     // hash password
@@ -151,6 +176,8 @@ async function reset(req, res){
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
     await user.save();
+  }else{
+    throw `Passwords do not match`;
   }
 }
 
@@ -271,6 +298,7 @@ exports.validateResetToken = function (req, res) {
   });
 };
 */
+
 /**
  * Reset password POST from email token
  */
@@ -283,7 +311,7 @@ exports.reset = function (req, res, next) {
 
     function (done) {
       User.findOne({
-        resetPasswordToken: req.params.token,
+        resetPasswordToken: req.body.reset_password_token,
         resetPasswordExpires: {
           $gt: Date.now()
         }
@@ -415,6 +443,5 @@ exports.changePassword = function (req, res, next) {
     });
   }
 };
-
-
 */
+

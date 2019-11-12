@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+//import { LocalDataSource } from 'ng2-smart-table';
+import { ServerDataSource } from 'ng2-smart-table';
+import { HttpClient } from '@angular/common/http';
 
-import { SmartTableService } from '../../../@core/data/smart-table.service';
-import { UsersTableService } from '../../../admin/services/users-table-service';
+//import { SmartTableService } from '../../../@core/data/smart-table.service';
+//import { UsersTableService } from '../../../admin/services/users-table-service';
 
 @Component({
   selector: 'ngx-smart-table',
@@ -31,14 +33,23 @@ export class SmartTableComponent {
       confirmDelete: true,
     },
     columns: {
-      id: {
+      /*id: {
         title: 'ID',
         type: 'number',
-      },
-      firstName: {
-        title: 'First Name',
+      },*/
+      fullName: {
+        title: 'Full Name',
         type: 'string',
       },
+      emailGroups:{
+        title: 'Email Groups',
+        type: '[string]',
+      },
+      roles: {
+        title: 'roles',
+        type: '[string]',
+      },
+      /*
       lastName: {
         title: 'Last Name',
         type: 'string',
@@ -46,23 +57,27 @@ export class SmartTableComponent {
       username: {
         title: 'Username',
         type: 'string',
-      },
+      },*/
       email: {
         title: 'E-mail',
         type: 'string',
       },
+      /*
       age: {
         title: 'Age',
         type: 'number',
-      },
+      },*/
     },
   };
 
-  source: LocalDataSource = new LocalDataSource();
+  //source: LocalDataSource = new LocalDataSource();
+  source: ServerDataSource;
 
-  constructor(private service: UsersTableService) {
-    const data = this.service.getData();
-    this.source.load(data);
+  //constructor(private service: UsersTableService) {
+  constructor(http: HttpClient){
+    //const data = this.service.getData();
+    //this.source.load(data);
+    this.source = new ServerDataSource(http, { endPoint: 'http://localhost:3000/api/users'});
   }
 
   onDeleteConfirm(event): void {

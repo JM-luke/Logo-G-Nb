@@ -74,12 +74,13 @@ export const NB_CORE_PROVIDERS = [
         resetPass: {
           endpoint: '/reset',
           method: 'post',
+
         },
       }),
     ],
     forms: {
       login: {
-        redirectDelay: 500, // delay before redirect after a successful login,
+        redirectDelay: 50, // delay before redirect after a successful login,
                             // while success message is shown to the user
         strategy: 'pass',  // strategy id key.
         rememberMe: true,   // whether to show or not the `rememberMe` checkbox
@@ -90,7 +91,7 @@ export const NB_CORE_PROVIDERS = [
         socialLinks: socialLinks, // social links at the bottom of a page
       },
       register: {
-        redirectDelay: 500,
+        redirectDelay: 50,
         strategy: 'pass',
         showMessages: {
           success: true,
@@ -109,6 +110,10 @@ export const NB_CORE_PROVIDERS = [
       },
       resetPassword: {
         strategy: 'pass',
+        showMessages: {     // show/not show success/error messages
+          success: true,
+          error: true,
+        },
         socialLinks: socialLinks,
       },
     },
@@ -121,14 +126,16 @@ export const NB_CORE_PROVIDERS = [
       },
       user: {
         //parent: 'guest',
-        view: ['panel'],
+        view: ['panel','extra-components', 'auth'],
       },
       controller: {
         parent: 'user',
+        view: ['*'],
         edit: '*',
       },
       admin: {
         parent: 'controller',
+        view: ['*'],
         remove: '*',
       }
     },

@@ -20,6 +20,8 @@ app.use(cors({origin: '*'}));
 
 //static
 app.use(express.static(__dirname + '/dist'));
+//app.use(express.static(process.cwd() + '/dist'));
+
 // use JWT auth to secure the api
 app.use(jwt());
 //routes
@@ -30,10 +32,11 @@ app.use('/api/controls', require('./routes/controls.routes'));
 app.use(errorHandler);
 
 //starting the server
-setInterval(function () {
-    dataLogo.updateLogo();
-    io.sockets.emit('dataLogo', dataLogo.logoPositions[0]);
-}, 5000);
+
+// setInterval(function () {
+//     dataLogo.updateLogo();
+//     io.sockets.emit('dataLogo', dataLogo.logoPositions[0]);
+// }, 5000);
 
 // socket.io
 io.on('connection', function (socket) {

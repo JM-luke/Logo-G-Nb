@@ -8,7 +8,8 @@ router.delete('/signout', authCtrl.signout);
 // Setting up the users password api
 router.post('/forgot', authCtrl.forgot);
 
-router.get('/reset/:token', authCtrl.validateResetToken);
+router.get('/reset-password', authCtrl.validateResetToken);
 router.post('/reset', authCtrl.reset);
+router.post('/reset-pass', authCtrl.resetPass);
 
 module.exports = router;

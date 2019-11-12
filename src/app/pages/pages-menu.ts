@@ -4,12 +4,20 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'E-commerce',
     icon: 'nb-e-commerce',
+    data: {
+      permission: 'view',
+      resource: 'E-commerce'
+    },
     link: '/pages/dashboard',
     home: true,
   },
   {
     title: 'IoT Dashboard',
     icon: 'nb-home',
+    data: {
+      permission: 'view',
+      resource: 'IoT Dashboard'
+    },
     link: '/pages/iot-dashboard',
   },
   {
@@ -19,6 +27,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Extra Components',
     icon: 'nb-star',
+    data: {
+      permission: 'view',
+      resource: 'extra-components'
+    },
     children: [
       {
         title: 'Calendar',
@@ -73,6 +85,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Forms',
     icon: 'nb-compose',
+    data: {
+      permission: 'view',
+      resource: 'forms'
+    },
     children: [
       {
         title: 'Form Inputs',
@@ -94,6 +110,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'UI Features',
+    data: {
+      permission: 'view',
+      resource: 'ui-features'
+    },
     icon: 'nb-keypad',
     link: '/pages/ui-features',
     children: [
@@ -117,6 +137,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Modal & Overlays',
+    data: {
+      permission: 'view',
+      resource: 'modal'
+    },
     icon: 'nb-layout-default',
     children: [
       {
@@ -143,6 +167,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Bootstrap',
+    data: {
+      permission: 'view',
+      resource: 'bootstrap'
+    },
     icon: 'nb-gear',
     children: [
       {
@@ -161,6 +189,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Maps',
+    data: {
+      permission: 'view',
+      resource: 'maps'
+    },
     icon: 'nb-location',
     children: [
       {
@@ -183,6 +215,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Charts',
+    data: {
+      permission: 'view',
+      resource: 'charts'
+    },
     icon: 'nb-bar-chart',
     children: [
       {
@@ -201,6 +237,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Editors',
+    data: {
+      permission: 'view',
+      resource: 'editors'
+    },
     icon: 'nb-title',
     children: [
       {
@@ -215,6 +255,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Tables',
+    data: {
+      permission: 'view',
+      resource: 'tables'
+    },
     icon: 'nb-tables',
     children: [
       {
@@ -225,6 +269,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Miscellaneous',
+    data: {
+      permission: 'view',
+      resource: 'miscellaneous'
+    },
     icon: 'nb-shuffle',
     children: [
       {
@@ -236,6 +284,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Admin',
     icon: 'nb-tables',
+    data: {
+      permission: 'view',
+      resource: 'admin',
+    },
     children: [
       {
         title: 'Users',
@@ -246,6 +298,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Auth',
     icon: 'nb-locked',
+    data: {
+      permission: 'view',
+      resource: 'auth',
+    },
     children: [
       {
         title: 'Login',
