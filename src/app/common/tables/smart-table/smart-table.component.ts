@@ -77,7 +77,7 @@ export class SmartTableComponent {
   constructor(http: HttpClient){
     //const data = this.service.getData();
     //this.source.load(data);
-    this.source = new ServerDataSource(http, { endPoint: 'http://localhost:3000/api/users'});
+    this.source = new ServerDataSource(http, { endPoint: 'http://localhost:3000/api/users' });
   }
 
   onDeleteConfirm(event): void {

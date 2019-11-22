@@ -296,6 +296,24 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
+    title: 'Outlook',
+    icon: 'nb-tables',
+    data: {
+      permission: 'view',
+      resource: 'admin',
+    },
+    children: [
+      {
+        title: 'Mail',
+        link: '/outlook/mail',
+      },
+      {
+        title: 'Contacts',
+        link: '/outlook/contacts',
+      },
+    ],
+  },
+  {
     title: 'Auth',
     icon: 'nb-locked',
     data: {

@@ -13,7 +13,7 @@ import {
   PlayerService,
   StateService,
 } from './utils';
-
+import { environment } from '../../environments/environment';
 const socialLinks = [
   {
     url: 'https://github.com/akveo/nebular',
@@ -54,7 +54,7 @@ export const NB_CORE_PROVIDERS = [
           class: NbAuthJWTToken,
           key: 'token',
         },
-        baseEndpoint: 'http://localhost:3000/api/auth',
+        baseEndpoint: `${environment.baseUrl}/auth`,
         login: {
           endpoint: '/signin',
           method: 'post',

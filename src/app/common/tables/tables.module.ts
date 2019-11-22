@@ -4,7 +4,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ThemeModule } from '../../@theme/theme.module';
 import { TablesRoutingModule, routedComponents } from './tables-routing.module';
 import { SmartTableService } from '../../@core/data/smart-table.service';
-import { UsersTableService } from '../../admin/services/users-table-service';
+//import { UsersTableService } from '../../admin/services/users-table-service';
 import { SmartTableComponent } from './smart-table/smart-table.component';
 
 @NgModule({
@@ -17,7 +17,7 @@ import { SmartTableComponent } from './smart-table/smart-table.component';
     ...routedComponents,
   ],
   providers: [
-    UsersTableService,
+    //UsersTableService,
   ],
   exports: [ SmartTableComponent ],
 })
