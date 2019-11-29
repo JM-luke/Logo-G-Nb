@@ -14,6 +14,11 @@ function errorHandler(err, req, res, next) {
         return res.status(400).json({ data: { errors: err.message+' :-((' }});
     }
 
+    if (err.name === 'OutlookAuthError') {
+        // Outlook validation error
+        return res.status(400).json({ data: { errors: err.message+' :-((' }});
+    }
+
     if (err.name === 'UnauthorizedError') {
         // jwt authentication error
         return res.status(401).json({ data: { errors: 'Invalid Token' }});

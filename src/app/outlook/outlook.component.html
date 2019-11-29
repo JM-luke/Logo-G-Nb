@@ -4,4 +4,19 @@
 <pre>
   {{data | json}} 
 </pre>
+<!-- Debug output -->
 
+<div *ngIf="authData" class="card">
+  <div class="card-body">
+    <h5 class="card-title">Debug</h5>
+    <pre class="bg-light border p-3"><code>{{authData.debug}}</code></pre>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <h1>Node Graph Tutorial</h1>
+  <p class="lead">This sample app shows how to use the Microsoft Graph API to access Outlook data from Node.js</p>
+  <div *ngIf="authData">
+    <a class="btn btn-primary btn-large" href="{{authData.signInUrl}}">Click here to login</a>
+  </div> 
+</div>

@@ -80,7 +80,7 @@ export const NB_CORE_PROVIDERS = [
     ],
     forms: {
       login: {
-        redirectDelay: 50, // delay before redirect after a successful login,
+        redirectDelay: 0, // delay before redirect after a successful login,
                             // while success message is shown to the user
         strategy: 'pass',  // strategy id key.
         rememberMe: true,   // whether to show or not the `rememberMe` checkbox
@@ -91,7 +91,7 @@ export const NB_CORE_PROVIDERS = [
         socialLinks: socialLinks, // social links at the bottom of a page
       },
       register: {
-        redirectDelay: 50,
+        redirectDelay: 0,
         strategy: 'pass',
         showMessages: {
           success: true,
@@ -101,11 +101,11 @@ export const NB_CORE_PROVIDERS = [
         socialLinks: socialLinks,
       },
       logout: {
-        redirectDelay: 500,
+        redirectDelay: 50,
         strategy: 'pass',
       },
       requestPassword: {
-        redirectDelay: 500,
+        redirectDelay: 50,
         strategy: 'pass'
       },
       resetPassword: {

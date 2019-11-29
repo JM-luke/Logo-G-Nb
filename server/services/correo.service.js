@@ -17,7 +17,7 @@ module.exports = {
 };
 
 async function getAuthUrl(req, res) {
-  let parms = { title: 'Home', active: { home: true } };
+  let parms = {};
   const accessToken = await authHelper.getAccessToken(req.cookies, res);
   const userName = req.cookies.graph_user_name;
   
@@ -40,7 +40,25 @@ async function getAuthUrl(req, res) {
 }
 
 async function authorize(req, res, next) {
-   console.log('  AUTHORIZE');
+  
+  
+  // Get auth code
+  const code = req.query.code;
+  
+  // If code is present, use it
+  if (code) {
+    try {
+      await authHelper.getTokenFromCode(code, res);
+      // Redirect to home
+      console.log('  AUTHORIZE');
+      res.redirect('/');
+    } catch (error) {
+      throw {name: 'OutlookAuthError', message: `Error exchanging code for token\n error: ${ error }` };
+    }
+  } else {
+    // Otherwise complain
+    throw {name: 'OutlookAuthError', message: `Authorization error\n error: ${ status= 'Missing code parameter' }` };
+  }
 }
 
 async function getAll(req) {

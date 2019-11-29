@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Url } from 'url';
 import { environment } from '../../environments/environment';
 
+import { AuthDataInterface } from './models/authData.model';
+
 @Component({
   selector: 'ngx-outlook',
   templateUrl: './outlook.component.html',
@@ -10,12 +12,14 @@ import { environment } from '../../environments/environment';
 })
 
 export class OutlookComponent implements OnInit {
-  public data: any = null;
+
+
+  public authData: AuthDataInterface = null;
   constructor(private httpClient: HttpClient) {
     const url = 'outlook' ;
 
-    httpClient.get(`${environment.baseUrl}/${url}`).subscribe(apiData => {
-      this.data = apiData;
+    httpClient.get<AuthDataInterface>(`${environment.baseUrl}/${url}`).subscribe(apiData => {
+      this.authData = apiData;
       console.log(`Data :`);
       console.log(apiData);
     });
