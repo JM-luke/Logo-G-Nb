@@ -1,3 +1,25 @@
-<p>
-  mail works!
-</p>
+<p>Mail works!</p>
+
+
+<!-- <pre>
+  {{ messages | json }}
+</pre> -->
+
+<h2>Inbox</h2>
+<table class="table">
+  <thead class="thead-light">
+    <th scope="col">From</th>
+    <th scope="col">Subject</th>
+    <th scope="col">Received</th>
+  </thead>
+  <tbody>
+
+      <tr *ngFor="let message of messages; let i = index">
+        <td title="{{message.from.emailAddress.address}}">{{message.from.emailAddress.name}}</td>
+        <td>{{message.subject}}</td>
+        <td>{{message.receivedDateTime}}</td>
+      </tr>
+
+  </tbody>
+
+</table>

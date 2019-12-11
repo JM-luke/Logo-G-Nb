@@ -3,6 +3,7 @@ var authHelper = require('../helpers/auth');
 var graph = require('@microsoft/microsoft-graph-client');
 var HttpsProxyAgent = require('https-proxy-agent');
 require ('isomorphic-fetch');
+require('dotenv').config();
 var request = require('request');
 
 module.exports = {
@@ -26,17 +27,9 @@ async function getAuthUrl(req, res) {
     parms.debug = `User: ${userName}\nAccess Token: ${accessToken}`;
   } else {
     parms.signInUrl = authHelper.getAuthUrl();
-    parms.debug = parms.signInUrl;
-    /*
-    console.log(' request ');
-    request(parms.signInUrl, function(err, res, body){
-      console.log(' request res' +res);
-      console.log(' request body' +body);
-    });
-    */
+    parms.debug = parms.signInUrl;  
   }
   return parms
-
 }
 
 async function authorize(req, res, next) {
@@ -48,10 +41,12 @@ async function authorize(req, res, next) {
   // If code is present, use it
   if (code) {
     try {
+      //Introduce cookie en res
       await authHelper.getTokenFromCode(code, res);
       // Redirect to home
-      console.log('  AUTHORIZE');
-      res.redirect('/');
+      console.log(`  AUTHORIZE CODE: ${code}`);
+      //set(loopMSGraph(),60000);
+      res.redirect('/#/');
     } catch (error) {
       throw {name: 'OutlookAuthError', message: `Error exchanging code for token\n error: ${ error }` };
     }
@@ -61,15 +56,14 @@ async function authorize(req, res, next) {
   }
 }
 
-async function getAll(req) {
+async function getAll(req, res) {
   /* GET /mail */
   
-
   const accessToken = await authHelper.getAccessToken(req.cookies, res);
   const userName = req.cookies.graph_user_name;
-
+  
   if (accessToken && userName) {
-    let proxy = process.env.http_proxy || 'http://8980260:100tauro@proxy.adif.es:8080';
+    let proxy = process.env.http_proxy || process.env.PROXY ;
     // Initialize Graph client
     const client = graph.Client.init({
       authProvider: (done) => {
@@ -87,14 +81,11 @@ async function getAll(req) {
       .orderby('receivedDateTime DESC')
       .get();
       return result.value;
-
     } catch (err) {
-
-      throw 'Error retrieving messages';
+      throw {name: 'OutlookAuthError', message: `Error retrieving messages ${err.message}` };
     } 
   } else {
-
-    throw 'User not found';
+    throw {name: 'OutlookAuthError', message: `User not found` };
   }
 }
 

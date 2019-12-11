@@ -5,7 +5,7 @@ var guard = require('express-jwt-permissions')();
 const role = require('../models/role');
 
 router.get('/', correoCtrl.getAuthUrl);
-router.get('/mail', guard.check(role.Admin), correoCtrl.getCorreos);
+router.get('/mail', correoCtrl.getCorreos);
 router.post('/mail', guard.check(role.Admin), correoCtrl.createCorreo);
 router.get('/mail:id', guard.check(role.Admin), correoCtrl.getCorreo);
 router.put('/mail:id', guard.check(role.Admin), correoCtrl.editCorreo);

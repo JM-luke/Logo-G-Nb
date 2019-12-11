@@ -17,7 +17,7 @@ const oauth2 = require('simple-oauth2').create(credentials);
 const jwt = require('jsonwebtoken');
 
 function getAuthUrl() {
-  console.log(` APP_ID: ${process.env.APP_ID}`);
+  
   const returnVal = oauth2.authorizationCode.authorizeURL({
     redirect_uri: process.env.REDIRECT_URI,
     scope: process.env.APP_SCOPES

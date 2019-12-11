@@ -12,11 +12,12 @@ const routes: Routes = [{
     path: 'mail',
     component: MailComponent,
   },
+  // {
+  //   path: '',
+  //   redirectTo: '/outlook/',
+  //   pathMatch: 'full',
+  // },
   {
-    path: '',
-    redirectTo: '/outlook/',
-    pathMatch: 'full',
-  }, {
     path: '**',
     component: NotFoundComponent,
   }],

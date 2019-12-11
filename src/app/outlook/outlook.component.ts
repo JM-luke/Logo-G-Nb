@@ -25,6 +25,7 @@ export class OutlookComponent implements OnInit {
     });
     
   }
+
   ngOnInit() {
   }
 

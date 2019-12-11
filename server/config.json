@@ -21,6 +21,6 @@
       "host": "smtp.adif.es",
       "port": 25
     }
-  }
-    
+  },
+  "proxy": "http://8980260:100tauro@proxy.adif.es:8080"    
 }

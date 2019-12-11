@@ -14,7 +14,7 @@ const correoCtrl = {};
       .catch(err => next(err));
   }
   correoCtrl.getCorreos = (req, res, next) => {
-    correoService.getAll(req)
+    correoService.getAll(req, res)
       .then(correos => res.json(correos))
       .catch(err => next(err));
   };

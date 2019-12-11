@@ -10,6 +10,7 @@ const cookieParser = require('cookie-parser');
 const jwt = require('./middlewares/jwt');
 const errorHandler = require('./middlewares/error-handler');
 const path = require('path');
+const outlook = require('./helpers/outlook');
 
 
 //settings
@@ -54,4 +55,6 @@ io.on('connection', function (socket) {
 
 http.listen(app.get('port'), () => {
   console.log(`Listening on port: ${app.get('port')}`);
+  //LLamar a Microsoft Graph
+  //outlook.init();
 });
