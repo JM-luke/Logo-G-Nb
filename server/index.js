@@ -10,7 +10,8 @@ const cookieParser = require('cookie-parser');
 const jwt = require('./middlewares/jwt');
 const errorHandler = require('./middlewares/error-handler');
 const path = require('path');
-const outlook = require('./helpers/outlook');
+//const outlook = require('./helpers/outlook');
+const msgraph = require('./helpers/spooky.msgraph');
 
 
 //settings
@@ -26,8 +27,8 @@ app.use(cookieParser());
 
 
 //static
-//app.use(express.static(__dirname + '/dist'));
-app.use(express.static(path.join(process.cwd(), '../dist')));
+//app.use(express.static(__dirname + '/dist')); //developer
+app.use(express.static(path.join(process.cwd(), '../dist')));//prod
 
 // use JWT auth to secure the api
 app.use(jwt());
@@ -42,19 +43,24 @@ app.use(errorHandler);
 
 //starting the server
 
-
 // setInterval(function () {
 //     dataLogo.updateLogo();
 //     io.sockets.emit('dataLogo', dataLogo.logoPositions[0]);
 // }, 5000);
 
+
 // socket.io
 io.on('connection', function (socket) {
-    console.log('a user connected');
-  });
+  console.log('a user connected');
+});
 
 http.listen(app.get('port'), () => {
   console.log(`Listening on port: ${app.get('port')}`);
-  //LLamar a Microsoft Graph
-  //outlook.init();
+  //init Microsoft Graph
+  // Iniciar correo outlook salaincidencias
+  // try {
+  //   msgraph.init();
+  // } catch (err) {
+  //   console.log('msGraph err' + err);
+  // }
 });

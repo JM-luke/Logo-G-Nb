@@ -22,5 +22,19 @@
       "port": 25
     }
   },
-  "proxy": "http://8980260:100tauro@proxy.adif.es:8080"    
+  "proxy": {
+    "url":"http://8980260:100tauro@proxy.adif.es:8080",
+    "dir":"http://proxy.adif.es",
+    "ip":"10.0.4.33",
+    "port":"8080",
+    "user":"8980260",
+    "pass":"100tauro"
+  },
+
+
+  "msgraph":{
+    "cuenta":"salaincidenciasjamvalencia@adif.es",
+    "pass":"gandia01"
+  }
+
 }

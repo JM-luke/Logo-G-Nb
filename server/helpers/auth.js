@@ -22,11 +22,12 @@ function getAuthUrl() {
     redirect_uri: process.env.REDIRECT_URI,
     scope: process.env.APP_SCOPES
   });
-  console.log(`Generated auth url: ${returnVal}`);
+  //console.log(`Generated auth url: ${returnVal}`);
   return returnVal;
 }
 
 async function getTokenFromCode(auth_code, res) {
+  
   let result = await oauth2.authorizationCode.getToken({
     code: auth_code,
     redirect_uri: process.env.REDIRECT_URI,
@@ -34,41 +35,60 @@ async function getTokenFromCode(auth_code, res) {
   });
 
   const token = oauth2.accessToken.create(result);
-  console.log('Token created: ', token.token);
+  //console.log('Token created: ', token.token);
 
-  saveValuesToCookie(token, res);
+  //saveValuesToGraph(token);
 
-  return token.token.access_token;
+  return token.token;
 }
 
-async function getAccessToken(cookies, res) {
+async function getAccessToken(token) {
+  
   // Do we have an access token cached?
-  let token = cookies.graph_access_token;
-
-  if (token) {
+  //console.log(`GETACCESSTOKEN  Token `);
+  //console.log(token);
+  //let subToken = token.access_token ? token.access_token.substring(20, 29) : null;
+  //console.log(`getAccessToken ${subToken}`);
+  if (token.access_token) {
     // We have a token, but is it expired?
     // Expire 5 minutes early to account for clock differences
     const FIVE_MINUTES = 300000;
-    const expiration = new Date(parseFloat(cookies.graph_token_expires - FIVE_MINUTES));
+    const expiration = new Date(parseFloat(token.token_expires - FIVE_MINUTES));
     if (expiration > new Date()) {
       // Token is still good, just return it
+      console.log('Token is still good, just return it');
       return token;
     }
   }
 
-  // Either no token or it's expired, do we have a 
-  // refresh token?
-  const refresh_token = cookies.graph_refresh_token;
-  if (refresh_token) {
-    const newToken = await oauth2.accessToken.create({refresh_token: refresh_token}).refresh();
-    saveValuesToCookie(newToken, res);
-    return newToken.token.access_token;
+  // Either no token or it's expired, do we have a refresh token?
+  if (token.refresh_token) {
+    const newToken = await oauth2.accessToken.create({refresh_token: token.refresh_token}).refresh();
+    const newTokenSaved = saveValuesToGraph(newToken);
+    console.log(`Either no token or its expired, do we have a refresh token ?\n${newTokenSaved}`);
+    //console.log(newTokenSaved);
+    return newTokenSaved;
   }
 
-  // Nothing in the cookies that helps, return empty
+  // Nothing in the graph that helps, return empty
   return null;
 }
 
+function saveValuesToGraph(token) {
+  let graph = {}
+  // Parse the identity token
+  const user = jwt.decode(token.token.id_token);
+  // Save the access token 
+  graph.access_token = token.token.access_token; //, { maxAge: 3600000, httpOnly: true });
+  // Save the user's name 
+  graph.user_name = user.name; // { maxAge: 3600000, httpOnly: true });
+  // Save the refresh token 
+  graph.refresh_token = token.token.refresh_token;// { maxAge: 7200000, httpOnly: true });
+  // Save the token expiration time 
+  graph.token_expires = token.token.expires_at.getTime(); //, { maxAge: 3600000, httpOnly: true });
+  return graph;
+}
+/*
 function saveValuesToCookie(token, res) {
   // Parse the identity token
   const user = jwt.decode(token.token.id_token);
@@ -82,7 +102,7 @@ function saveValuesToCookie(token, res) {
   // Save the token expiration tiem in a cookie
   res.cookie('graph_token_expires', token.token.expires_at.getTime(), {maxAge: 3600000, httpOnly: true});
 }
-
+*/
 function clearCookies(res) {
   // Clear cookies
   res.clearCookie('graph_access_token', {maxAge: 3600000, httpOnly: true});

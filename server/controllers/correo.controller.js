@@ -1,4 +1,5 @@
 const correoService = require('../services/correo.service');
+const outlook = require('../helpers/spooky.msgraph');
 
 const correoCtrl = {};
 
@@ -11,7 +12,10 @@ const correoCtrl = {};
   correoCtrl.authorize = (req,res, next) => {
     correoService.authorize(req, res,next)
       .then()
-      .catch(err => next(err));
+      .catch(err => {
+        outlook.init();
+        next(err);
+      });
   }
   correoCtrl.getCorreos = (req, res, next) => {
     correoService.getAll(req, res)
