@@ -2,7 +2,7 @@
 
 require('dotenv').config();
 
-const credentials = {
+const config = {
   client: {
     id: process.env.APP_ID,
     secret: process.env.APP_PASSWORD
@@ -13,7 +13,8 @@ const credentials = {
     tokenPath: 'common/oauth2/v2.0/token'
   }
 };
-const oauth2 = require('simple-oauth2').create(credentials);
+//const oauth2 = require('simple-oauth2').create(credentials);
+const { ClientCredentials, ResourceOwnerPassword, authorizationCode } = require('simple-oauth2');
 const jwt = require('jsonwebtoken');
 
 function getAuthUrl() {
